@@ -32,7 +32,6 @@ public class SelectOfferPage extends FunnelBasePage {
 
     public SelectOfferPage(WebDriver driver) {
         super(driver);
-        waitForWebElements(Arrays.asList(continueBtn));
     }
 
     public SelectOfferPage verifyDefaultFirstOffer(Offer offer){
@@ -60,6 +59,7 @@ public class SelectOfferPage extends FunnelBasePage {
         Assert.assertEquals(offerAfterAccountCreation.getApr(), offerAfterReLogin.getApr(),  msg("APR"));
         return new SelectOfferPage(driver);
     }
+
 
     private String msg(String value, WebElement actualText){
         return String.format("There is no default %s found. Actual Text: '%s' | ", value, actualText.getText());

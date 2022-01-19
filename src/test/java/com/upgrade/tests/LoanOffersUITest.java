@@ -1,7 +1,6 @@
 package com.upgrade.tests;
 
-import com.upgrade.pages.LandingPage;
-import com.upgrade.pages.SignInPage;
+import com.upgrade.pages.*;
 import com.upgrade.pojos.loan.Borrower;
 import com.upgrade.pojos.loan.Offer;
 import com.upgrade.utilities.CreateTestData;
@@ -29,9 +28,9 @@ public class LoanOffersUITest extends AbstractTest {
                 .enterLoanDetails(borrower)
                 .enterContactDetails(borrower)
                 .enterIncomeDetails(borrower)
-                .enterLoginDetails(borrower)
+                .enterLoginDetails(borrower, new SelectOfferPage(getDriver()))
                 .verifyDefaultFirstOffer(offerAfterAccountCreation)
-                .clickSignOut()
+                .clickSignOut(new SignOutPage(getDriver()))
                 .verifySignOutPage();
 
         //Validate the offer details after login
@@ -42,7 +41,7 @@ public class LoanOffersUITest extends AbstractTest {
                 .signIn(borrower)
                 .verifyDefaultFirstOffer(offerAfterReLogin)
                 .verifyOfferAfterReLogin(offerAfterAccountCreation, offerAfterReLogin)
-                .clickSignOut();
+                .clickSignOut(new SignOutPage(getDriver()));
     }
 
     /*
@@ -52,7 +51,24 @@ public class LoanOffersUITest extends AbstractTest {
 
     @Test
     public void validateDeclineLoanTest() {
-        // Implement Case # 2
+        Borrower borrower = CreateTestData.getRandomTestBorrower("Debt Consolidation");
+        borrower.setYearlyIncome(CreateTestData.generateRandomNumberFromRange(100, 1000));
+        borrower.setAdditionalIncome(CreateTestData.generateRandomNumberFromRange(100, 500));
+
+        LandingPage landingPage = new LandingPage(getDriver());
+        Offer offerAfterAccountCreation = new Offer();
+
+        //Capture offer details in the Offers page
+        landingPage
+                .gotoLandingPage(url)
+                .enterLoanDetails(borrower)
+                .enterContactDetails(borrower)
+                .enterIncomeDetails(borrower)
+                .enterLoginDetails(borrower, new RejectedOfferPage(getDriver()))
+                .verifyRejectedOffer()
+                .verifyDocuments()
+                .clickSignOut(new SignInPage(getDriver()))
+                .verifySignInHeader();
     }
 
 }

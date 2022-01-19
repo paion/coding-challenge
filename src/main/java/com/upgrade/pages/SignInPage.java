@@ -5,11 +5,15 @@ import lombok.extern.log4j.Log4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.testng.Assert;
 
 import java.util.Arrays;
 
 @Log4j
 public class SignInPage extends BasePage {
+
+    @FindBy(xpath= "//h2[text()='Welcome Back!']")
+    private WebElement welcomeBackTxt;
 
     @FindBy(css="[data-auto='username']")
     private WebElement username;
@@ -38,5 +42,10 @@ public class SignInPage extends BasePage {
         driver.get(server);
         waitForWebElements(Arrays.asList(username));
         return this;
+    }
+
+    public void verifySignInHeader(){
+        waitForWebElement(welcomeBackTxt);
+        Assert.assertEquals(welcomeBackTxt.getText(), "Welcome Back!", "Welcome Back! is not found");
     }
 }

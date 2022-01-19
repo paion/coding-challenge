@@ -5,8 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.util.Arrays;
-
 public class LoginInfoPage extends BasePage {
 
     @FindBy(name = "username")
@@ -35,17 +33,16 @@ public class LoginInfoPage extends BasePage {
 
     public LoginInfoPage(WebDriver driver) {
         super(driver);
-        waitForWebElements(Arrays.asList(email));
+        waitForWebElement(email);
     }
 
-    // Note : Use java generics to return a different page
-    public SelectOfferPage enterLoginDetails(Borrower randomPerson) {
+    public <T> T enterLoginDetails(Borrower randomPerson, T type) {
         type(email, randomPerson.getEmail());
         type(password, randomPerson.getPassword());
         selectTermsOfUse();
         click(checkYourRateBtn);
         waitForPage();
-        return new SelectOfferPage(driver);
+        return type;
     }
 
     public LoginInfoPage selectTermsOfUse() {

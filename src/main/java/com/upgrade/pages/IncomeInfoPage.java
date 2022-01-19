@@ -14,6 +14,9 @@ public class IncomeInfoPage extends BasePage {
     @FindBy(name = "borrowerIncome")
     private WebElement yearlyIncome;
 
+    @FindBy(css = "[data-auto='confirmIncome']")
+    private WebElement confirmIncome;
+
     @FindBy(name = "borrowerAdditionalIncome")
     private WebElement additionalIncome;
 
@@ -39,9 +42,8 @@ public class IncomeInfoPage extends BasePage {
         BigDecimal yearlyIncome = randomPerson.getYearlyIncome();
         if (yearlyIncome.compareTo(BigDecimal.valueOf(10000)) == -1
                 || yearlyIncome.compareTo(BigDecimal.valueOf(300000)) == 1) {
-            By by = By.cssSelector("div.ReactModalPortal button[data-auto='confirmIncome']");
-            waitForElementToBeDisplayed(by, 10, 1);
-            click(by);
+            waitForElementToBeDisplayed(confirmIncome, 10, 1);
+            click(confirmIncome);
         }
         return this;
     }

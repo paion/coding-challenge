@@ -16,11 +16,11 @@ public class FunnelBasePage extends BasePage {
         super(driver);
     }
 
-    public SignOutPage clickSignOut() {
+    public <T> T clickSignOut(T type) {
         click(menu);
         waitForWebElement(signOut);
         click(signOut);
-        return new SignOutPage(driver);
+        return type;
     }
 
 }
