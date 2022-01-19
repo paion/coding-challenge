@@ -32,6 +32,7 @@ public class SelectOfferPage extends FunnelBasePage {
 
     public SelectOfferPage(WebDriver driver) {
         super(driver);
+        waitForWebElement(continueBtn);
     }
 
     public SelectOfferPage verifyDefaultFirstOffer(Offer offer){
