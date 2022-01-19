@@ -1,6 +1,6 @@
 package com.upgrade.pages;
 
-import com.upgrade.pojos.Borrower;
+import com.upgrade.pojos.loan.Borrower;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;

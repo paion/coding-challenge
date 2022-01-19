@@ -1,6 +1,6 @@
 package com.upgrade.pages;
 
-import com.upgrade.pojos.Borrower;
+import com.upgrade.pojos.loan.Borrower;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

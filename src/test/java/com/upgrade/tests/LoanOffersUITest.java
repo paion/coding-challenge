@@ -2,7 +2,8 @@ package com.upgrade.tests;
 
 import com.upgrade.pages.LandingPage;
 import com.upgrade.pages.SignInPage;
-import com.upgrade.pojos.Borrower;
+import com.upgrade.pojos.loan.Borrower;
+import com.upgrade.pojos.loan.Offer;
 import com.upgrade.utilities.CreateTestData;
 import lombok.extern.log4j.Log4j;
 import org.testng.annotations.Test;
@@ -20,6 +21,7 @@ public class LoanOffersUITest extends AbstractTest {
     public void validateOffersTest() {
         Borrower borrower = CreateTestData.getRandomTestBorrower("Home Improvement");
         LandingPage landingPage = new LandingPage(getDriver());
+        Offer offerAfterAccountCreation = new Offer();
 
         //Capture offer details in the Offers page
         landingPage
@@ -28,15 +30,18 @@ public class LoanOffersUITest extends AbstractTest {
                 .enterContactDetails(borrower)
                 .enterIncomeDetails(borrower)
                 .enterLoginDetails(borrower)
-                .verifyDefaultFirstOffer()
+                .verifyDefaultFirstOffer(offerAfterAccountCreation)
                 .clickSignOut()
                 .verifySignOutPage();
 
         //Validate the offer details after login
         SignInPage signInPage = new SignInPage(getDriver());
+        Offer offerAfterReLogin = new Offer();
         signInPage
                 .gotoSignInPage(url)
                 .signIn(borrower)
+                .verifyDefaultFirstOffer(offerAfterReLogin)
+                .verifyOfferAfterReLogin(offerAfterAccountCreation, offerAfterReLogin)
                 .clickSignOut();
     }
 

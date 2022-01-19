@@ -1,7 +1,7 @@
 package com.upgrade.utilities;
 
 import com.github.javafaker.Faker;
-import com.upgrade.pojos.Borrower;
+import com.upgrade.pojos.loan.Borrower;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
