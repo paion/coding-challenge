@@ -16,6 +16,10 @@ public class LeadSecretApiTest extends AbstractTest {
 
     private UUID loanAppUuid = UUID.fromString("b8096ec7-2150-405f-84f5-ae99864b3e96");
     private String url = "https://credapi.credify.tech/api/brfunnelorch/";
+    private static final String MISSING_LOAN_APPLICATION = "MISSING_LOAN_APPLICATION";
+    private static final String ABNORMAL = "ABNORMAL";
+    private static final String NOT_FOUND = "NOT_FOUND";
+    private static final String MESSAGE = "Loan application does not exist.";
 
     /*
         Please refer README.md for more details on APT Test
@@ -64,11 +68,11 @@ public class LeadSecretApiTest extends AbstractTest {
                 .as(LeadSecretResponse.class);
 
         assertThat(response.getCode()).isEqualTo("100001");
-        assertThat(response.getCodeName()).isEqualTo("MISSING_LOAN_APPLICATION");
-        assertThat(response.getMessage()).isEqualTo("Loan application does not exist.");
+        assertThat(response.getCodeName()).isEqualTo(MISSING_LOAN_APPLICATION);
+        assertThat(response.getMessage()).isEqualTo(MESSAGE);
         assertThat(response.getRetryable()).isEqualTo("false");
-        assertThat(response.getType()).isEqualTo("ABNORMAL");
-        assertThat(response.getHttpStatus()).isEqualTo("NOT_FOUND");
+        assertThat(response.getType()).isEqualTo(ABNORMAL);
+        assertThat(response.getHttpStatus()).isEqualTo(NOT_FOUND);
     }
 
 }
