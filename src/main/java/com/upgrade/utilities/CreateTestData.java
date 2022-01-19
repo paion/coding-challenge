@@ -5,6 +5,7 @@ import com.upgrade.pojos.Borrower;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -18,7 +19,7 @@ public class CreateTestData {
         borrower.setLastName(faker.name().lastName());
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        borrower.setDob(simpleDateFormat.format(faker.date().birthday()));
+        borrower.setDob(simpleDateFormat.format(faker.date().between(Date.valueOf("1930-01-01"), Date.valueOf("2000-01-01"))));
         borrower.setCity(faker.address().city());
         borrower.setEmail(String.format("coding.%s@upgrade-challenge.com", generateRandomNumberFromRange(15000000, 20000000)));
         borrower.setPassword("System@987");
@@ -27,7 +28,7 @@ public class CreateTestData {
         borrower.setState("CA");
         borrower.setLoanPurpose(loanPurpose);
         borrower.setYearlyIncome(generateRandomNumberFromRange(150000, 200000));
-        borrower.setAdditionalIncome(generateRandomNumberFromRange(1000, 10000));
+        borrower.setAdditionalIncome(generateRandomNumberFromRange(5000, 10000));
         borrower.setDesiredLoanAmount(generateRandomNumberFromRange(5000, 10000));
         return borrower;
     }

@@ -28,7 +28,9 @@ public class LoanOffersUITest extends AbstractTest {
                 .enterContactDetails(borrower)
                 .enterIncomeDetails(borrower)
                 .enterLoginDetails(borrower)
-                .clickSignOut().verifySignOutPage();
+                .verifyDefaultFirstOffer()
+                .clickSignOut()
+                .verifySignOutPage();
 
         //Validate the offer details after login
         SignInPage signInPage = new SignInPage(getDriver());
