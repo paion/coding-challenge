@@ -11,17 +11,21 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 @Log4j
 public class BasePage {
-    private static final long TIMEOUT = 60;
+    private static final long TIMEOUT = 10;
+    private static final Duration TIMEOUT_DURATION = Duration.ofSeconds(TIMEOUT);
+    private static final Duration POLL_INTERVAL = Duration.ofMillis(100);
+
     protected WebDriver driver;
+    protected WebDriverWait wait;
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
+        wait = new WebDriverWait(driver, TIMEOUT);
         PageFactory.initElements(driver, this);
     }
 
@@ -59,21 +63,22 @@ public class BasePage {
 
     protected void waitForWebElements(List<WebElement> mandatoryElements) {
         log.info("Looking for mandatory elements on the page");
-        //Wait for dom to go to ready state
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-
         // Wait fo mandatory elements to be clickable
         for (WebElement elm : mandatoryElements) {
-            try {
-                wait
-                        .ignoring(StaleElementReferenceException.class)
-                        .withTimeout(Duration.ofSeconds(60))
-                        .pollingEvery(Duration.ofSeconds(1))
-                        .until(visibilityOf(elm));
-            } catch (TimeoutException e) {
-                log.info("Couldnt verify visibility of the element: " + elm);
-                throw new RuntimeException(e);
-            }
+            waitForWebElement(elm);
+        }
+    }
+
+    protected void waitForWebElement(WebElement elm) {
+        try {
+            wait
+                    .ignoring(StaleElementReferenceException.class)
+                    .withTimeout(TIMEOUT_DURATION)
+                    .pollingEvery(POLL_INTERVAL)
+                    .until(visibilityOf(elm));
+        } catch (TimeoutException e) {
+            log.info("Couldn't verify visibility of the element: " + elm);
+            throw new RuntimeException(e);
         }
     }
 
@@ -84,11 +89,15 @@ public class BasePage {
     }
 
     public void waitForElementToBeDisplayed(@NonNull By by, int timeout, int pollInterval) {
+        waitForElementToBeDisplayed(driver.findElement(by), timeout, pollInterval);
+    }
+
+    public void waitForElementToBeDisplayed(@NonNull WebElement element, int timeout, int pollInterval) {
         new FluentWait<>(driver)
                 .withTimeout(Duration.ofSeconds(timeout))
                 .pollingEvery(Duration.ofSeconds(pollInterval))
                 .ignoring(NoSuchElementException.class)
-                .until(driver -> driver.findElement(by).isDisplayed());
+                .until(driver -> element.isDisplayed());
     }
 
     public void waitForPage() {
@@ -104,15 +113,12 @@ public class BasePage {
     }
 
     public void presenceOfElementLocated(@NonNull By by, int timeoutInSeconds) {
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        new WebDriverWait(driver, timeoutInSeconds)
-                .until(ExpectedConditions.presenceOfElementLocated(by));
-        driver.manage().timeouts().implicitlyWait(TIMEOUT, TimeUnit.SECONDS);
+        wait.until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
+
     public void waitForAttributeValueToChange(@NonNull By by, @NonNull String attribute, @NonNull String expectedAttributeValue) {
-        new WebDriverWait(driver, TIMEOUT)
-                .ignoring(WebDriverException.class)
+        wait.ignoring(WebDriverException.class)
                 .until(ExpectedConditions.attributeToBe(by, attribute, expectedAttributeValue));
     }
 
@@ -120,9 +126,12 @@ public class BasePage {
         ((JavascriptExecutor) driver).executeScript("!!document.activeElement ? document.activeElement.blur() : 0");
     }
 
-    public void textToBePresentInElement(@NonNull By element, @NonNull String text) {
-        new WebDriverWait(driver, TIMEOUT)
-                .until(ExpectedConditions.textToBePresentInElementLocated(element, text));
+    public void textToBePresentInElement(@NonNull By locator, @NonNull String text) {
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(locator, text));
+    }
+
+    public void textToBePresentInElement(@NonNull WebElement element, @NonNull String text) {
+        wait.until(ExpectedConditions.textToBePresentInElement(element, text));
     }
 
     public static void pause(int seconds) {

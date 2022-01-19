@@ -19,7 +19,7 @@ public class ContactInfoPage extends BasePage {
     @FindBy(name = "borrowerLastName")
     private WebElement lastName;
 
-    @FindBy(css = "div.geosuggest input")
+    @FindBy(id = "geosuggest__input--borrowerStreet")
     private WebElement street;
 
     @FindBy(name = "borrowerCity")
@@ -48,8 +48,9 @@ public class ContactInfoPage extends BasePage {
     public IncomeInfoPage enterContactDetails(Borrower borrower) {
         type(firstName, borrower.getFirstName());
         type(lastName, borrower.getLastName());
+        waitForWebElement(street);
         type(street, borrower.getStreet());
-        pause(1);
+        waitForElementToBeDisplayed(firstName, 10, 1);
         click(firstName);
         type(city, borrower.getCity());
         type(state, borrower.getState());

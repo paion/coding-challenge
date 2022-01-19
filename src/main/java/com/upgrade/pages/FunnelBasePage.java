@@ -1,11 +1,8 @@
 package com.upgrade.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
 public class FunnelBasePage extends BasePage {
 
@@ -21,9 +18,8 @@ public class FunnelBasePage extends BasePage {
 
     public SignOutPage clickSignOut() {
         click(menu);
-        visibilityOfElementLocated(By.linkText("Sign Out"));
+        waitForWebElement(signOut);
         click(signOut);
-        textToBePresentInElement(By.tagName("body"), "You've been successfully logged out");
         return new SignOutPage(driver);
     }
 

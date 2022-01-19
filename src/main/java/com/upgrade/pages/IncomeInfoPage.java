@@ -41,7 +41,7 @@ public class IncomeInfoPage extends BasePage {
                 || yearlyIncome.compareTo(BigDecimal.valueOf(300000)) == 1) {
             By by = By.cssSelector("div.ReactModalPortal button[data-auto='confirmIncome']");
             waitForElementToBeDisplayed(by, 10, 1);
-            click(By.cssSelector("div.ReactModalPortal button[data-auto='confirmIncome']"));
+            click(by);
         }
         return this;
     }
