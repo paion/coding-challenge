@@ -173,7 +173,7 @@ In your automated tests - validate atleast the following, and feel free to inclu
 
 ##### Validations
 
-1. Validate that for correct loanAppUuid provided in the payload below, the API response code is a 200 (OK)
+1. Validate that for correct loanAppUuid provided in the payload above, the API response code is a 200 (OK)
 2. For the above use case, validate the response and make sure productType attribute has value PERSONAL_LOAN.
 3. Validate firstName as Benjamin in borrowerResumptionInfo.
 4. Validate that in the initial POST request, if a different loanAppUuid is provided (that doesn't exist in our system) - the API response is a 404 (NOT_FOUND)

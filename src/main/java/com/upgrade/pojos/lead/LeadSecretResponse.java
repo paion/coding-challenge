@@ -14,4 +14,10 @@ public class LeadSecretResponse {
     private List<Object> requiredAgreements;
     private List<String> resetOptions;
     private Object originalLoanApp;
+    private String  code;
+    private String  codeName;
+    private String  message;
+    private String  retryable;
+    private String  type;
+    private String  httpStatus;
 }

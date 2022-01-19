@@ -58,7 +58,6 @@ public class LoanOffersUITest extends AbstractTest {
         borrower.setAdditionalIncome(CreateTestData.generateRandomNumberFromRange(100, 500));
 
         LandingPage landingPage = new LandingPage(getDriver());
-        Offer offerAfterAccountCreation = new Offer();
 
         //Capture offer details in the Offers page
         landingPage
