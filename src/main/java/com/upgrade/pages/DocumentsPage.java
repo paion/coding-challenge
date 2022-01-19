@@ -3,7 +3,8 @@ package com.upgrade.pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.testng.Assert;
+
+import static org.testng.Assert.*;
 
 public class DocumentsPage extends BasePage{
 
@@ -36,16 +37,16 @@ public class DocumentsPage extends BasePage{
     public DocumentsPage(WebDriver driver, String url) {
         super(driver);
         waitForWebElement(title);
-        Assert.assertEquals(driver.getCurrentUrl(), url, "Url is not matching with link clicked");
+        assertEquals(driver.getCurrentUrl(), url, "Url is not matching with link clicked");
     }
 
     public FunnelBasePage verifyDocuments(){
         waitForWebElement(upgradePrivateNoticeAgreementTxt);
-        Assert.assertEquals(upgradePrivateNoticeAgreementTxt.getText(), UPGRADE_PRIVACY_NOTICE_AGREEMENT, UPGRADE_PRIVACY_NOTICE_AGREEMENT.concat(msg_suffix));
-        Assert.assertEquals(creditProfileAuthAgreementTxt.getText(), CREDIT_PROFILE_AUTH_AGREEMENT, CREDIT_PROFILE_AUTH_AGREEMENT.concat(msg_suffix));
-        Assert.assertEquals(eSignActConsentAgreementTxt.getText(), ESIGN_ACT_CONSENT_AGREEMENT, ESIGN_ACT_CONSENT_AGREEMENT.concat(msg_suffix));
-        Assert.assertEquals(termsOfUseAgreementTxt.getText(), TERMS_OF_USE_AGREEMENT, TERMS_OF_USE_AGREEMENT.concat(msg_suffix));
-        Assert.assertEquals(adverseActionTxt.getText(), ADVERSE_ACTION_NOTICE, ADVERSE_ACTION_NOTICE.concat(msg_suffix));
+        assertEquals(upgradePrivateNoticeAgreementTxt.getText(), UPGRADE_PRIVACY_NOTICE_AGREEMENT, UPGRADE_PRIVACY_NOTICE_AGREEMENT.concat(msg_suffix));
+        assertEquals(creditProfileAuthAgreementTxt.getText(), CREDIT_PROFILE_AUTH_AGREEMENT, CREDIT_PROFILE_AUTH_AGREEMENT.concat(msg_suffix));
+        assertEquals(eSignActConsentAgreementTxt.getText(), ESIGN_ACT_CONSENT_AGREEMENT, ESIGN_ACT_CONSENT_AGREEMENT.concat(msg_suffix));
+        assertEquals(termsOfUseAgreementTxt.getText(), TERMS_OF_USE_AGREEMENT, TERMS_OF_USE_AGREEMENT.concat(msg_suffix));
+        assertEquals(adverseActionTxt.getText(), ADVERSE_ACTION_NOTICE, ADVERSE_ACTION_NOTICE.concat(msg_suffix));
 
         return new FunnelBasePage(driver);
     }
