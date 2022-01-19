@@ -60,7 +60,6 @@ public class SelectOfferPage extends FunnelBasePage {
         return new SelectOfferPage(driver);
     }
 
-
     private String msg(String value, WebElement actualText){
         return String.format("There is no default %s found. Actual Text: '%s' | ", value, actualText.getText());
     }
