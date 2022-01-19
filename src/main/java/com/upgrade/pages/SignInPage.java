@@ -40,7 +40,7 @@ public class SignInPage extends BasePage {
         String server = String.format("%s/portal/login", url);
         log.info("Navigate to - " + server);
         driver.get(server);
-        waitForWebElements(Arrays.asList(username));
+        waitForWebElement(username);
         return this;
     }
 

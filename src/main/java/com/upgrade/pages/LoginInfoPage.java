@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class LoginInfoPage extends BasePage {
 
     @FindBy(name = "username")
@@ -36,13 +38,13 @@ public class LoginInfoPage extends BasePage {
         waitForWebElement(email);
     }
 
-    public <T> T enterLoginDetails(Borrower randomPerson, T type) {
+    public <T> T enterLoginDetails(Borrower randomPerson, Class<T> type) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         type(email, randomPerson.getEmail());
         type(password, randomPerson.getPassword());
         selectTermsOfUse();
         click(checkYourRateBtn);
         waitForPage();
-        return type;
+        return type.getDeclaredConstructor(WebDriver.class).newInstance(driver);
     }
 
     public LoginInfoPage selectTermsOfUse() {

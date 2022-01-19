@@ -7,6 +7,8 @@ import com.upgrade.utilities.CreateTestData;
 import lombok.extern.log4j.Log4j;
 import org.testng.annotations.Test;
 
+import java.lang.reflect.InvocationTargetException;
+
 @Log4j
 public class LoanOffersUITest extends AbstractTest {
     private static final String url = "https://www.credify.tech";
@@ -17,7 +19,7 @@ public class LoanOffersUITest extends AbstractTest {
     */
 
     @Test
-    public void validateOffersTest() {
+    public void validateOffersTest() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         Borrower borrower = CreateTestData.getRandomTestBorrower("Home Improvement");
         LandingPage landingPage = new LandingPage(getDriver());
         Offer offerAfterAccountCreation = new Offer();
@@ -28,9 +30,9 @@ public class LoanOffersUITest extends AbstractTest {
                 .enterLoanDetails(borrower)
                 .enterContactDetails(borrower)
                 .enterIncomeDetails(borrower)
-                .enterLoginDetails(borrower, new SelectOfferPage(getDriver()))
+                .enterLoginDetails(borrower, SelectOfferPage.class)
                 .verifyDefaultFirstOffer(offerAfterAccountCreation)
-                .clickSignOut(new SignOutPage(getDriver()))
+                .clickSignOut(SignOutPage.class)
                 .verifySignOutPage();
 
         //Validate the offer details after login
@@ -41,7 +43,7 @@ public class LoanOffersUITest extends AbstractTest {
                 .signIn(borrower)
                 .verifyDefaultFirstOffer(offerAfterReLogin)
                 .verifyOfferAfterReLogin(offerAfterAccountCreation, offerAfterReLogin)
-                .clickSignOut(new SignOutPage(getDriver()));
+                .clickSignOut(SignOutPage.class);
     }
 
     /*
@@ -50,7 +52,7 @@ public class LoanOffersUITest extends AbstractTest {
     */
 
     @Test
-    public void validateDeclineLoanTest() {
+    public void validateDeclineLoanTest() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         Borrower borrower = CreateTestData.getRandomTestBorrower("Debt Consolidation");
         borrower.setYearlyIncome(CreateTestData.generateRandomNumberFromRange(100, 1000));
         borrower.setAdditionalIncome(CreateTestData.generateRandomNumberFromRange(100, 500));
@@ -64,10 +66,10 @@ public class LoanOffersUITest extends AbstractTest {
                 .enterLoanDetails(borrower)
                 .enterContactDetails(borrower)
                 .enterIncomeDetails(borrower)
-                .enterLoginDetails(borrower, new RejectedOfferPage(getDriver()))
+                .enterLoginDetails(borrower, RejectedOfferPage.class)
                 .verifyRejectedOffer()
                 .verifyDocuments()
-                .clickSignOut(new SignInPage(getDriver()))
+                .clickSignOut(SignInPage.class)
                 .verifySignInHeader();
     }
 

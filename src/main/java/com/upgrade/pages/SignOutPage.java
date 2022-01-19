@@ -15,6 +15,7 @@ public class SignOutPage extends BasePage {
 
     public SignOutPage(WebDriver driver) {
         super(driver);
+        waitForWebElement(signOutText);
     }
 
     public void verifySignOutPage(){
