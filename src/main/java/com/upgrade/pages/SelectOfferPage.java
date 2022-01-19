@@ -52,17 +52,21 @@ public class SelectOfferPage extends FunnelBasePage {
         return new SelectOfferPage(driver);
     }
 
+    public SelectOfferPage verifyOfferAfterReLogin(Offer offerAfterAccountCreation, Offer offerAfterReLogin){
+        Assert.assertEquals(offerAfterAccountCreation.getLoanAmount(), offerAfterReLogin.getLoanAmount(),  msg2("Loan amount"));
+        Assert.assertEquals(offerAfterAccountCreation.getMonthlyPayment(), offerAfterReLogin.getMonthlyPayment(),  msg2("Monthly payment"));
+        Assert.assertEquals(offerAfterAccountCreation.getLoanTerm(), offerAfterReLogin.getLoanTerm(),  msg2("Loan term"));
+        Assert.assertEquals(offerAfterAccountCreation.getInterestRate(), offerAfterReLogin.getInterestRate(),  msg2("Interest rate"));
+        Assert.assertEquals(offerAfterAccountCreation.getApr(), offerAfterReLogin.getApr(),  msg2("APR"));
+        return new SelectOfferPage(driver);
+    }
+
     private String msg(String value, WebElement actualText){
         return String.format("There is no default %s found. Actual Text: '%s' | ", value, actualText.getText());
     }
 
-    public SelectOfferPage verifyOfferAfterReLogin(Offer offerAfterAccountCreation, Offer offerAfterReLogin){
-        offerAfterAccountCreation.getLoanAmount().equals(offerAfterReLogin.getLoanAmount());
-        offerAfterAccountCreation.getMonthlyPayment().equals(offerAfterReLogin.getMonthlyPayment());
-        offerAfterAccountCreation.getLoanTerm().equals(offerAfterReLogin.getLoanTerm());
-        offerAfterAccountCreation.getInterestRate().equals(offerAfterReLogin.getInterestRate());
-        offerAfterAccountCreation.getApr().equals(offerAfterReLogin.getApr());
-        return new SelectOfferPage(driver);
+    private String msg2(String value){
+        return String.format("%s is not matching after Re-login", value);
     }
 
 }
