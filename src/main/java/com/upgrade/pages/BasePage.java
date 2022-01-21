@@ -16,7 +16,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 @Log4j
 public class BasePage {
-    protected static final long TIMEOUT = 10;
+    protected static final long TIMEOUT = 15;
     protected static final Duration TIMEOUT_DURATION = Duration.ofSeconds(TIMEOUT);
     protected static final Duration POLL_INTERVAL = Duration.ofMillis(100);
 
