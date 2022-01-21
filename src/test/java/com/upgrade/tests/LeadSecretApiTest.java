@@ -32,12 +32,7 @@ public class LeadSecretApiTest extends AbstractTest {
     */
     @Test
     public void leadSecretTest() {
-        LeadSecretRequest leadSecretRequest = getLeadSecretRequest();
-
-        LeadSecretResponse response = getApiRequestForLeadSecret()
-                .post(leadSecretRequest, 200)
-                .getResponse()
-                .as(LeadSecretResponse.class);
+        LeadSecretResponse response = getApiResponseForLeadSecret(200);
 
         assertThat(response.getLoanAppResumptionInfo().getProductType()).isEqualTo(PERSONAL_LOAN);
         assertThat(response.getLoanAppResumptionInfo().getBorrowerResumptionInfo().getFirstName()).isEqualTo("Benjamin");
@@ -52,12 +47,8 @@ public class LeadSecretApiTest extends AbstractTest {
     @Test
     public void leadSecretWithInvalidLoanAppUuidTest() {
         loanAppUuid = UUID.randomUUID();
-        LeadSecretRequest leadSecretRequest = getLeadSecretRequest();
 
-        LeadSecretResponse response = getApiRequestForLeadSecret()
-                .post(leadSecretRequest, 404)
-                .getResponse()
-                .as(LeadSecretResponse.class);
+        LeadSecretResponse response = getApiResponseForLeadSecret(404);
 
         assertThat(response.getCode()).isEqualTo("100001");
         assertThat(response.getCodeName()).isEqualTo(MISSING_LOAN_APPLICATION);
@@ -74,12 +65,15 @@ public class LeadSecretApiTest extends AbstractTest {
                 .build();
     }
 
-    private ApiRequest getApiRequestForLeadSecret() {
+    private LeadSecretResponse getApiResponseForLeadSecret(int statusCode) {
         return apiRequest()
                 .addHeader(CORR_ID, UUID.randomUUID().toString())
                 .addHeader(SOURCE_ID, CODING_CHALLENGE)
                 .setContentType(ContentType.JSON)
-                .setRequestUrl(String.format("%s%s", url, URI));
+                .setRequestUrl(String.format("%s%s", url, URI))
+                .post(getLeadSecretRequest(), statusCode)
+                .getResponse()
+                .as(LeadSecretResponse.class);
     }
 
 }
