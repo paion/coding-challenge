@@ -20,6 +20,7 @@ public class LeadSecretApiTest extends AbstractTest {
     private static final String ABNORMAL = "ABNORMAL";
     private static final String NOT_FOUND = "NOT_FOUND";
     private static final String MESSAGE = "Loan application does not exist.";
+    private static final String PERSONAL_LOAN = "PERSONAL_LOAN";
 
     /*
         Please refer README.md for more details on APT Test
@@ -40,7 +41,7 @@ public class LeadSecretApiTest extends AbstractTest {
                 .getResponse()
                 .as(LeadSecretResponse.class);
 
-        assertThat(response.getLoanAppResumptionInfo().getProductType()).isEqualTo("PERSONAL_LOAN");
+        assertThat(response.getLoanAppResumptionInfo().getProductType()).isEqualTo(PERSONAL_LOAN);
         assertThat(response.getLoanAppResumptionInfo().getBorrowerResumptionInfo().getFirstName()).isEqualTo("Benjamin");
         assertThat(response.getOffers()).isNullOrEmpty();
         assertThat(response.getSelectedOffer()).isNull();
