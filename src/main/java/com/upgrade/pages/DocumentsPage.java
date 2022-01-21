@@ -43,13 +43,16 @@ public class DocumentsPage extends BasePage{
 
     public FunnelBasePage verifyDocuments(){
         waitForWebElement(upgradePrivateNoticeAgreementTxt);
-        assertEquals(upgradePrivateNoticeAgreementTxt.getText(), UPGRADE_PRIVACY_NOTICE_AGREEMENT, UPGRADE_PRIVACY_NOTICE_AGREEMENT.concat(msg_suffix));
-        assertEquals(creditProfileAuthAgreementTxt.getText(), CREDIT_PROFILE_AUTH_AGREEMENT, CREDIT_PROFILE_AUTH_AGREEMENT.concat(msg_suffix));
-        assertEquals(eSignActConsentAgreementTxt.getText(), ESIGN_ACT_CONSENT_AGREEMENT, ESIGN_ACT_CONSENT_AGREEMENT.concat(msg_suffix));
-        assertEquals(termsOfUseAgreementTxt.getText(), TERMS_OF_USE_AGREEMENT, TERMS_OF_USE_AGREEMENT.concat(msg_suffix));
-        assertEquals(adverseActionTxt.getText(), ADVERSE_ACTION_NOTICE, ADVERSE_ACTION_NOTICE.concat(msg_suffix));
-
+        assertEqual(upgradePrivateNoticeAgreementTxt, UPGRADE_PRIVACY_NOTICE_AGREEMENT);
+        assertEqual(creditProfileAuthAgreementTxt, CREDIT_PROFILE_AUTH_AGREEMENT);
+        assertEqual(eSignActConsentAgreementTxt, ESIGN_ACT_CONSENT_AGREEMENT);
+        assertEqual(termsOfUseAgreementTxt, TERMS_OF_USE_AGREEMENT);
+        assertEqual(adverseActionTxt, ADVERSE_ACTION_NOTICE);
         return new FunnelBasePage(driver);
+    }
+
+    private void assertEqual(WebElement webElement, String expectedTxt){
+        assertEquals(webElement.getText(), expectedTxt, expectedTxt.concat(msg_suffix));
     }
 
 }
