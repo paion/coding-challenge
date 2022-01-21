@@ -3,6 +3,7 @@ package com.upgrade.tests;
 import com.upgrade.pages.*;
 import com.upgrade.pojos.loan.Borrower;
 import com.upgrade.pojos.loan.Offer;
+import com.upgrade.utilities.CommonUtilities;
 import com.upgrade.utilities.CreateTestData;
 import lombok.extern.log4j.Log4j;
 import org.testng.annotations.Test;
@@ -55,8 +56,8 @@ public class LoanOffersUITest extends AbstractTest {
     @Test
     public void validateDeclineLoanTest() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         Borrower borrower = CreateTestData.getRandomTestBorrower(DEBT_CONSOLIDATION);
-        borrower.setYearlyIncome(CreateTestData.generateRandomNumberFromRange(100, 1000));
-        borrower.setAdditionalIncome(CreateTestData.generateRandomNumberFromRange(100, 500));
+        borrower.setYearlyIncome(CommonUtilities.generateRandomNumberFromRange(100, 1000));
+        borrower.setAdditionalIncome(CommonUtilities.generateRandomNumberFromRange(100, 500));
 
         LandingPage landingPage = new LandingPage(getDriver());
 

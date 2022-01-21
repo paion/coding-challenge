@@ -3,11 +3,11 @@ package com.upgrade.utilities;
 import com.github.javafaker.Faker;
 import com.upgrade.pojos.loan.Borrower;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+
+import static com.upgrade.utilities.CommonUtilities.*;
 
 public class CreateTestData {
 
@@ -31,9 +31,5 @@ public class CreateTestData {
         borrower.setAdditionalIncome(generateRandomNumberFromRange(5000, 10000));
         borrower.setDesiredLoanAmount(generateRandomNumberFromRange(5000, 10000));
         return borrower;
-    }
-
-    public static BigDecimal generateRandomNumberFromRange(int min, int max) {
-        return BigDecimal.valueOf(Math.random() * (max - min + 1) + min).setScale(0, RoundingMode.DOWN);
     }
 }

@@ -1,10 +1,7 @@
 package com.upgrade.pages;
 
 import com.upgrade.pojos.loan.Borrower;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+import com.upgrade.utilities.CommonUtilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -55,14 +52,9 @@ public class ContactInfoPage extends BasePage {
         type(city, borrower.getCity());
         type(state, borrower.getState());
         type(zipCode, borrower.getZipCode());
-        type(dateOfBirth, convertDOBFormat(borrower.getDob()));
+        type(dateOfBirth, CommonUtilities.convertDOBFormat(borrower.getDob()));
         click(continueContactInfo);
         return new IncomeInfoPage(driver);
     }
 
-    private String convertDOBFormat(String dateOfBirth) {
-        DateTime dt = new DateTime(dateOfBirth, DateTimeZone.UTC);
-        DateTimeFormatter fmt = DateTimeFormat.forPattern("MMddyyyy");
-        return fmt.print(dt);
-    }
 }
