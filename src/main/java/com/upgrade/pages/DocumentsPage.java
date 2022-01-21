@@ -15,7 +15,7 @@ public class DocumentsPage extends BasePage{
     private static final String ESIGN_ACT_CONSENT_AGREEMENT = "ESIGN Act Consent Agreement";
     private static final String TERMS_OF_USE_AGREEMENT = "Terms Of Use Agreement";
     private static final String ADVERSE_ACTION_NOTICE = "Adverse Action Notice";
-    private static final String msg_suffix = "txt not found";
+    private static final String msg_suffix = " txt not found";
 
     @FindBy(css = "[data-auto='layoutTitle']")
     private WebElement title;
