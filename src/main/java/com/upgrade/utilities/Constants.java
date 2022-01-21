@@ -15,6 +15,8 @@ public class Constants {
     public static final String REJECTED_OFFER_TXT = "We can't find you a loan offer yet, but you still have great options";
     public static final String ADVERSE_LEARN_MORE_TXT = "If you would like to learn more about why you were not approved, please click here.";
 
+    public static final String LOG_OUT_MSG = "You've been successfully logged out.\nSee you later.";
+
     public static final String APPROVED_LOAN_AMOUNT = "Approved loan amount";
     public static final String MONTHLY_PAYMENT = "Monthly payment";
     public static final String LOAN_TERM = "Loan term";

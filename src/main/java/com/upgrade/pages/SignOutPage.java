@@ -4,9 +4,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class SignOutPage extends BasePage {
+import static com.upgrade.utilities.Constants.*;
 
-    private static final String logOutMsg = "You've been successfully logged out.\nSee you later.";
+public class SignOutPage extends BasePage {
 
     @FindBy(css = "[data-auto='logoutMessage']")
     private WebElement signOutText;
@@ -17,6 +17,6 @@ public class SignOutPage extends BasePage {
     }
 
     public void verifySignOutPage(){
-        textToBePresentInElement(signOutText, logOutMsg);
+        textToBePresentInElement(signOutText, LOG_OUT_MSG);
     }
 }
