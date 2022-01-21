@@ -2,6 +2,7 @@ package com.upgrade.pages;
 
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -9,7 +10,10 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Calendar;
 import java.util.List;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
@@ -156,4 +160,17 @@ public class BasePage {
         log.info(String.format("Clicking On: %s", display));
     }
 
+    public static String takeScreenshot(WebDriver driver) throws Exception {
+        String timeStamp;
+        File screenShotName;
+        File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+
+        timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+        screenShotName = new File( System.getProperty("user.dir").concat("\\Screenshots\\"+timeStamp+".png"));
+        FileUtils.copyFile(scrFile, screenShotName);
+
+        String filePath = screenShotName.toString();
+        String path = "<a href='" + filePath + "'> <br><img src='"+filePath+"' height='300' width='300'/><br> </a>";
+        return path;
+    }
 }
