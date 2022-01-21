@@ -50,7 +50,7 @@ public class ContactInfoPage extends BasePage {
         type(lastName, borrower.getLastName());
         waitForWebElement(street);
         type(street, borrower.getStreet());
-        waitForElementToBeDisplayed(firstName, 10, 1);
+        waitForElementToBeDisplayed(firstName, TIMEOUT, 1);
         click(firstName);
         type(city, borrower.getCity());
         type(state, borrower.getState());

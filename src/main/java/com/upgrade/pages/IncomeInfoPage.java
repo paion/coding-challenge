@@ -42,7 +42,7 @@ public class IncomeInfoPage extends BasePage {
         BigDecimal yearlyIncome = randomPerson.getYearlyIncome();
         if (yearlyIncome.compareTo(BigDecimal.valueOf(10000)) == -1
                 || yearlyIncome.compareTo(BigDecimal.valueOf(300000)) == 1) {
-            waitForElementToBeDisplayed(confirmIncome, 10, 1);
+            waitForElementToBeDisplayed(confirmIncome, TIMEOUT, 1);
             click(confirmIncome);
         }
         return this;

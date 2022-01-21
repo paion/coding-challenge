@@ -16,9 +16,9 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 @Log4j
 public class BasePage {
-    private static final long TIMEOUT = 10;
-    private static final Duration TIMEOUT_DURATION = Duration.ofSeconds(TIMEOUT);
-    private static final Duration POLL_INTERVAL = Duration.ofMillis(100);
+    protected static final long TIMEOUT = 10;
+    protected static final Duration TIMEOUT_DURATION = Duration.ofSeconds(TIMEOUT);
+    protected static final Duration POLL_INTERVAL = Duration.ofMillis(100);
 
     protected WebDriver driver;
     protected WebDriverWait wait;
@@ -88,11 +88,11 @@ public class BasePage {
         executor.executeScript("arguments[0].focus();", element);
     }
 
-    public void waitForElementToBeDisplayed(@NonNull By by, int timeout, int pollInterval) {
+    public void waitForElementToBeDisplayed(@NonNull By by, long timeout, int pollInterval) {
         waitForElementToBeDisplayed(driver.findElement(by), timeout, pollInterval);
     }
 
-    public void waitForElementToBeDisplayed(@NonNull WebElement element, int timeout, int pollInterval) {
+    public void waitForElementToBeDisplayed(@NonNull WebElement element, long timeout, int pollInterval) {
         new FluentWait<>(driver)
                 .withTimeout(Duration.ofSeconds(timeout))
                 .pollingEvery(Duration.ofSeconds(pollInterval))
