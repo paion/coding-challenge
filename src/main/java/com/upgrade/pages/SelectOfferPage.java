@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import static org.testng.Assert.*;
+import static com.upgrade.utilities.Constants.*;
 
 @Log4j
 public class SelectOfferPage extends FunnelBasePage {
@@ -36,11 +37,11 @@ public class SelectOfferPage extends FunnelBasePage {
 
     public SelectOfferPage verifyDefaultFirstOffer(Offer offer){
         waitForWebElement(userLoanAmount);
-        assertNotNull(userLoanAmount.getText(), msg("approved loan amount", userLoanAmount));
-        assertTrue(monthlyPayment.getText().contains("$"), msg("monthly payment", monthlyPayment));
-        assertTrue(loanTerm.getText().contains(" Month"), msg("month term", loanTerm));
-        assertTrue(loanInterestRate.getText().contains("%"), msg("interest rate", loanInterestRate));
-        assertTrue(apr.getText().contains("%"), msg("APR", apr));
+        assertNotNull(userLoanAmount.getText(), msg(APPROVED_LOAN_AMOUNT, userLoanAmount));
+        assertTrue(monthlyPayment.getText().contains("$"), msg(MONTHLY_PAYMENT, monthlyPayment));
+        assertTrue(loanTerm.getText().contains(" Month"), msg(LOAN_TERM, loanTerm));
+        assertTrue(loanInterestRate.getText().contains("%"), msg(INTEREST_RATE, loanInterestRate));
+        assertTrue(apr.getText().contains("%"), msg(APR, apr));
 
         offer.setLoanAmount(userLoanAmount.getText());
         offer.setMonthlyPayment(monthlyPayment.getText());
@@ -52,16 +53,16 @@ public class SelectOfferPage extends FunnelBasePage {
     }
 
     public SelectOfferPage verifyOfferAfterReLogin(Offer offerAfterAccountCreation, Offer offerAfterReLogin){
-        assertEquals(offerAfterAccountCreation.getLoanAmount(), offerAfterReLogin.getLoanAmount(),  msg("Loan amount"));
-        assertEquals(offerAfterAccountCreation.getMonthlyPayment(), offerAfterReLogin.getMonthlyPayment(),  msg("Monthly payment"));
-        assertEquals(offerAfterAccountCreation.getLoanTerm(), offerAfterReLogin.getLoanTerm(),  msg("Loan term"));
-        assertEquals(offerAfterAccountCreation.getInterestRate(), offerAfterReLogin.getInterestRate(),  msg("Interest rate"));
-        assertEquals(offerAfterAccountCreation.getApr(), offerAfterReLogin.getApr(),  msg("APR"));
+        assertEquals(offerAfterAccountCreation.getLoanAmount(), offerAfterReLogin.getLoanAmount(),  msg(APPROVED_LOAN_AMOUNT));
+        assertEquals(offerAfterAccountCreation.getMonthlyPayment(), offerAfterReLogin.getMonthlyPayment(),  msg(MONTHLY_PAYMENT));
+        assertEquals(offerAfterAccountCreation.getLoanTerm(), offerAfterReLogin.getLoanTerm(),  msg(LOAN_TERM));
+        assertEquals(offerAfterAccountCreation.getInterestRate(), offerAfterReLogin.getInterestRate(),  msg(INTEREST_RATE));
+        assertEquals(offerAfterAccountCreation.getApr(), offerAfterReLogin.getApr(),  msg(APR));
         return new SelectOfferPage(driver);
     }
 
     private String msg(String value, WebElement actualText){
-        return String.format("There is no default %s found. Actual Text: '%s' | ", value, actualText.getText());
+        return String.format("%s is not found. Actual Text: '%s' | ", value, actualText.getText());
     }
 
     private String msg(String value){

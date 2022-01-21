@@ -6,8 +6,9 @@ import com.upgrade.pojos.loan.Offer;
 import com.upgrade.utilities.CreateTestData;
 import lombok.extern.log4j.Log4j;
 import org.testng.annotations.Test;
-
 import java.lang.reflect.InvocationTargetException;
+
+import static com.upgrade.utilities.Constants.*;
 
 @Log4j
 public class LoanOffersUITest extends AbstractTest {
@@ -20,7 +21,7 @@ public class LoanOffersUITest extends AbstractTest {
 
     @Test
     public void validateOffersTest() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        Borrower borrower = CreateTestData.getRandomTestBorrower("Home Improvement");
+        Borrower borrower = CreateTestData.getRandomTestBorrower(HOME_IMPROVEMENT);
         LandingPage landingPage = new LandingPage(getDriver());
         Offer offerAfterAccountCreation = new Offer();
 
@@ -53,7 +54,7 @@ public class LoanOffersUITest extends AbstractTest {
 
     @Test
     public void validateDeclineLoanTest() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        Borrower borrower = CreateTestData.getRandomTestBorrower("Debt Consolidation");
+        Borrower borrower = CreateTestData.getRandomTestBorrower(DEBT_CONSOLIDATION);
         borrower.setYearlyIncome(CreateTestData.generateRandomNumberFromRange(100, 1000));
         borrower.setAdditionalIncome(CreateTestData.generateRandomNumberFromRange(100, 500));
 

@@ -5,11 +5,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
 
-public class RejectedOfferPage extends FunnelBasePage{
+import static com.upgrade.utilities.Constants.*;
 
-    //TODO: Need to confirm if this is the correct message or not, bcs Readme.md file has different msg for rejection
-    private static final String REJECTED_OFFER_TXT = "We can't find you a loan offer yet, but you still have great options";
-    private static final String ADVERSE_LEARN_MORE_TXT = "If you would like to learn more about why you were not approved, please click here.";
+public class RejectedOfferPage extends FunnelBasePage{
 
     @FindBy(css = ".col-md-6")
     private WebElement rejectedOfferMsg;

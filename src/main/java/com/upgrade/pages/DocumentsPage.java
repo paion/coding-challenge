@@ -5,34 +5,26 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import static org.testng.Assert.*;
+import static com.upgrade.utilities.Constants.*;
 
 public class DocumentsPage extends BasePage{
-
-    private static final String xpathPrefix = "//td[text()='";
-    private static final String xpathSufix = "']";
-    private static final String UPGRADE_PRIVACY_NOTICE_AGREEMENT = "Upgrade Privacy Notice Agreement";
-    private static final String CREDIT_PROFILE_AUTH_AGREEMENT = "Credit Profile Authorization Agreement";
-    private static final String ESIGN_ACT_CONSENT_AGREEMENT = "ESIGN Act Consent Agreement";
-    private static final String TERMS_OF_USE_AGREEMENT = "Terms Of Use Agreement";
-    private static final String ADVERSE_ACTION_NOTICE = "Adverse Action Notice";
-    private static final String msg_suffix = " txt not found";
 
     @FindBy(css = "[data-auto='layoutTitle']")
     private WebElement title;
 
-    @FindBy(xpath = xpathPrefix + UPGRADE_PRIVACY_NOTICE_AGREEMENT + xpathSufix)
+    @FindBy(xpath = XPATH_PREFIX + UPGRADE_PRIVACY_NOTICE_AGREEMENT + XPATH_SUFFIX)
     private WebElement upgradePrivateNoticeAgreementTxt;
 
-    @FindBy(xpath = xpathPrefix + CREDIT_PROFILE_AUTH_AGREEMENT + xpathSufix)
+    @FindBy(xpath = XPATH_PREFIX + CREDIT_PROFILE_AUTH_AGREEMENT + XPATH_SUFFIX)
     private WebElement creditProfileAuthAgreementTxt;
 
-    @FindBy(xpath = xpathPrefix + ESIGN_ACT_CONSENT_AGREEMENT + xpathSufix)
+    @FindBy(xpath = XPATH_PREFIX + ESIGN_ACT_CONSENT_AGREEMENT + XPATH_SUFFIX)
     private WebElement eSignActConsentAgreementTxt;
 
-    @FindBy(xpath = xpathPrefix + TERMS_OF_USE_AGREEMENT + xpathSufix)
+    @FindBy(xpath = XPATH_PREFIX + TERMS_OF_USE_AGREEMENT + XPATH_SUFFIX)
     private WebElement termsOfUseAgreementTxt;
 
-    @FindBy(xpath = xpathPrefix + ADVERSE_ACTION_NOTICE + xpathSufix)
+    @FindBy(xpath = XPATH_PREFIX + ADVERSE_ACTION_NOTICE + XPATH_SUFFIX)
     private WebElement adverseActionTxt;
 
     public DocumentsPage(WebDriver driver, String url) {
@@ -52,7 +44,7 @@ public class DocumentsPage extends BasePage{
     }
 
     private void assertEqual(WebElement webElement, String expectedTxt){
-        assertEquals(webElement.getText(), expectedTxt, expectedTxt.concat(msg_suffix));
+        assertEquals(webElement.getText(), expectedTxt, expectedTxt.concat(MSG_SUFFIX));
     }
 
 }

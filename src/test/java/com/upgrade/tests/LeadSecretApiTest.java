@@ -1,6 +1,5 @@
 package com.upgrade.tests;
 
-import com.upgrade.api.ApiRequest;
 import com.upgrade.pojos.lead.LeadSecretRequest;
 import com.upgrade.pojos.lead.LeadSecretResponse;
 import io.restassured.http.ContentType;
@@ -10,22 +9,13 @@ import org.testng.annotations.Test;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+import static com.upgrade.utilities.Constants.*;
 
 @Log4j
 public class LeadSecretApiTest extends AbstractTest {
 
     private UUID loanAppUuid = UUID.fromString("b8096ec7-2150-405f-84f5-ae99864b3e96");
     private String url = "https://credapi.credify.tech/api/brfunnelorch/";
-    private static final String MISSING_LOAN_APPLICATION = "MISSING_LOAN_APPLICATION";
-    private static final String ABNORMAL = "ABNORMAL";
-    private static final String NOT_FOUND = "NOT_FOUND";
-    private static final String MESSAGE = "Loan application does not exist.";
-    private static final String PERSONAL_LOAN = "PERSONAL_LOAN";
-    private static final String CORR_ID = "x-cf-corr-id";
-    private static final String SOURCE_ID = "x-cf-source-id";
-    private static final String CODING_CHALLENGE = "coding-challenge";
-    private static final String URI = "v2/resume/byLeadSecret";
 
     /*
         Please refer README.md for more details on APT Test
@@ -70,7 +60,7 @@ public class LeadSecretApiTest extends AbstractTest {
                 .addHeader(CORR_ID, UUID.randomUUID().toString())
                 .addHeader(SOURCE_ID, CODING_CHALLENGE)
                 .setContentType(ContentType.JSON)
-                .setRequestUrl(String.format("%s%s", url, URI))
+                .setRequestUrl(String.format("%s%s", url, LEAD_SECRET_URI))
                 .post(getLeadSecretRequest(), statusCode)
                 .getResponse()
                 .as(LeadSecretResponse.class);
