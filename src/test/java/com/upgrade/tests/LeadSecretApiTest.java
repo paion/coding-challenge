@@ -1,5 +1,6 @@
 package com.upgrade.tests;
 
+import com.upgrade.api.ApiRequest;
 import com.upgrade.pojos.lead.LeadSecretRequest;
 import com.upgrade.pojos.lead.LeadSecretResponse;
 import io.restassured.http.ContentType;
@@ -21,22 +22,19 @@ public class LeadSecretApiTest extends AbstractTest {
     private static final String NOT_FOUND = "NOT_FOUND";
     private static final String MESSAGE = "Loan application does not exist.";
     private static final String PERSONAL_LOAN = "PERSONAL_LOAN";
+    private static final String CORR_ID = "x-cf-corr-id";
+    private static final String SOURCE_ID = "x-cf-source-id";
+    private static final String CODING_CHALLENGE = "coding-challenge";
+    private static final String URI = "v2/resume/byLeadSecret";
 
     /*
         Please refer README.md for more details on APT Test
     */
     @Test
     public void leadSecretTest() {
-        LeadSecretRequest leadSecretRequest = LeadSecretRequest.builder()
-                .loanAppUuid(loanAppUuid)
-                .skipSideEffects(true)
-                .build();
+        LeadSecretRequest leadSecretRequest = getLeadSecretRequest();
 
-        LeadSecretResponse response = apiRequest()
-                .addHeader("x-cf-corr-id", UUID.randomUUID().toString())
-                .addHeader("x-cf-source-id", "coding-challenge")
-                .setContentType(ContentType.JSON)
-                .setRequestUrl(String.format("%s%s", url, "v2/resume/byLeadSecret"))
+        LeadSecretResponse response = getApiRequestForLeadSecret()
                 .post(leadSecretRequest, 200)
                 .getResponse()
                 .as(LeadSecretResponse.class);
@@ -54,16 +52,9 @@ public class LeadSecretApiTest extends AbstractTest {
     @Test
     public void leadSecretWithInvalidLoanAppUuidTest() {
         loanAppUuid = UUID.randomUUID();
-        LeadSecretRequest leadSecretRequest = LeadSecretRequest.builder()
-                .loanAppUuid(loanAppUuid)
-                .skipSideEffects(true)
-                .build();
+        LeadSecretRequest leadSecretRequest = getLeadSecretRequest();
 
-        LeadSecretResponse response = apiRequest()
-                .addHeader("x-cf-corr-id", UUID.randomUUID().toString())
-                .addHeader("x-cf-source-id", "coding-challenge")
-                .setContentType(ContentType.JSON)
-                .setRequestUrl(String.format("%s%s", url, "v2/resume/byLeadSecret"))
+        LeadSecretResponse response = getApiRequestForLeadSecret()
                 .post(leadSecretRequest, 404)
                 .getResponse()
                 .as(LeadSecretResponse.class);
@@ -74,6 +65,21 @@ public class LeadSecretApiTest extends AbstractTest {
         assertThat(response.getRetryable()).isEqualTo("false");
         assertThat(response.getType()).isEqualTo(ABNORMAL);
         assertThat(response.getHttpStatus()).isEqualTo(NOT_FOUND);
+    }
+
+    private LeadSecretRequest getLeadSecretRequest() {
+        return LeadSecretRequest.builder()
+                .loanAppUuid(loanAppUuid)
+                .skipSideEffects(true)
+                .build();
+    }
+
+    private ApiRequest getApiRequestForLeadSecret() {
+        return apiRequest()
+                .addHeader(CORR_ID, UUID.randomUUID().toString())
+                .addHeader(SOURCE_ID, CODING_CHALLENGE)
+                .setContentType(ContentType.JSON)
+                .setRequestUrl(String.format("%s%s", url, URI));
     }
 
 }
