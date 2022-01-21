@@ -9,6 +9,7 @@ import static org.testng.Assert.*;
 public class DocumentsPage extends BasePage{
 
     private static final String xpathPrefix = "//td[text()='";
+    private static final String xpathSufix = "']";
     private static final String UPGRADE_PRIVACY_NOTICE_AGREEMENT = "Upgrade Privacy Notice Agreement";
     private static final String CREDIT_PROFILE_AUTH_AGREEMENT = "Credit Profile Authorization Agreement";
     private static final String ESIGN_ACT_CONSENT_AGREEMENT = "ESIGN Act Consent Agreement";
@@ -19,19 +20,19 @@ public class DocumentsPage extends BasePage{
     @FindBy(css = "[data-auto='layoutTitle']")
     private WebElement title;
 
-    @FindBy(xpath = xpathPrefix + UPGRADE_PRIVACY_NOTICE_AGREEMENT + "']")
+    @FindBy(xpath = xpathPrefix + UPGRADE_PRIVACY_NOTICE_AGREEMENT + xpathSufix)
     private WebElement upgradePrivateNoticeAgreementTxt;
 
-    @FindBy(xpath = xpathPrefix + CREDIT_PROFILE_AUTH_AGREEMENT + "']")
+    @FindBy(xpath = xpathPrefix + CREDIT_PROFILE_AUTH_AGREEMENT + xpathSufix)
     private WebElement creditProfileAuthAgreementTxt;
 
-    @FindBy(xpath = xpathPrefix + ESIGN_ACT_CONSENT_AGREEMENT + "']")
+    @FindBy(xpath = xpathPrefix + ESIGN_ACT_CONSENT_AGREEMENT + xpathSufix)
     private WebElement eSignActConsentAgreementTxt;
 
-    @FindBy(xpath = xpathPrefix + TERMS_OF_USE_AGREEMENT + "']")
+    @FindBy(xpath = xpathPrefix + TERMS_OF_USE_AGREEMENT + xpathSufix)
     private WebElement termsOfUseAgreementTxt;
 
-    @FindBy(xpath = xpathPrefix + ADVERSE_ACTION_NOTICE + "']")
+    @FindBy(xpath = xpathPrefix + ADVERSE_ACTION_NOTICE + xpathSufix)
     private WebElement adverseActionTxt;
 
     public DocumentsPage(WebDriver driver, String url) {
