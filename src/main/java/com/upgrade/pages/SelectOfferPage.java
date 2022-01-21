@@ -11,6 +11,7 @@ import static com.upgrade.utilities.Constants.*;
 
 @Log4j
 public class SelectOfferPage extends FunnelBasePage {
+    final String prefix = "[data-auto='offer-card-content-submit'] [data-auto='default";
 
     @FindBy(css = "[data-auto='getDefaultLoan']")
     private WebElement continueBtn;
@@ -18,16 +19,16 @@ public class SelectOfferPage extends FunnelBasePage {
     @FindBy(css = "[data-auto='userLoanAmount']")
     private WebElement userLoanAmount;
 
-    @FindBy(css = "[data-auto='offer-card-content-submit'] [data-auto='defaultMonthlyPayment']")
+    @FindBy(css = prefix + "MonthlyPayment']")
     private WebElement monthlyPayment;
 
-    @FindBy(css = "[data-auto='offer-card-content-submit'] [data-auto='defaultLoanTerm'] div")
+    @FindBy(css = prefix + "LoanTerm'] div")
     private WebElement loanTerm;
 
-    @FindBy(css = "[data-auto='offer-card-content-submit'] [data-auto='defaultLoanInterestRate'] div")
+    @FindBy(css = prefix + "LoanInterestRate'] div")
     private WebElement loanInterestRate;
 
-    @FindBy(css = "[data-auto='offer-card-content-submit'] [data-auto='defaultAPR']")
+    @FindBy(css = prefix + "APR']")
     private WebElement apr;
 
     public SelectOfferPage(WebDriver driver) {
