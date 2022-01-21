@@ -1,6 +1,6 @@
 package com.upgrade.pages;
 
-import com.upgrade.pojos.Borrower;
+import com.upgrade.pojos.loan.Borrower;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,6 +13,9 @@ public class IncomeInfoPage extends BasePage {
 
     @FindBy(name = "borrowerIncome")
     private WebElement yearlyIncome;
+
+    @FindBy(css = "[data-auto='confirmIncome']")
+    private WebElement confirmIncome;
 
     @FindBy(name = "borrowerAdditionalIncome")
     private WebElement additionalIncome;
@@ -39,9 +42,8 @@ public class IncomeInfoPage extends BasePage {
         BigDecimal yearlyIncome = randomPerson.getYearlyIncome();
         if (yearlyIncome.compareTo(BigDecimal.valueOf(10000)) == -1
                 || yearlyIncome.compareTo(BigDecimal.valueOf(300000)) == 1) {
-            By by = By.cssSelector("div.ReactModalPortal button[data-auto='confirmIncome']");
-            waitForElementToBeDisplayed(by, 10, 1);
-            click(By.cssSelector("div.ReactModalPortal button[data-auto='confirmIncome']"));
+            waitForElementToBeDisplayed(confirmIncome, TIMEOUT, 1);
+            click(confirmIncome);
         }
         return this;
     }

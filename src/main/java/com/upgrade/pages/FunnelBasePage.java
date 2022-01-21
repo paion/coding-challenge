@@ -1,11 +1,10 @@
 package com.upgrade.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
+import java.lang.reflect.InvocationTargetException;
 
 public class FunnelBasePage extends BasePage {
 
@@ -19,12 +18,11 @@ public class FunnelBasePage extends BasePage {
         super(driver);
     }
 
-    public SignOutPage clickSignOut() {
+    public <T> T clickSignOut(Class<T> type) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         click(menu);
-        visibilityOfElementLocated(By.linkText("Sign Out"));
+        waitForWebElement(signOut);
         click(signOut);
-        textToBePresentInElement(By.tagName("body"), "You've been successfully logged out");
-        return new SignOutPage(driver);
+        return type.getDeclaredConstructor(WebDriver.class).newInstance(driver);
     }
 
 }

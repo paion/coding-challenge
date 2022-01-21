@@ -1,11 +1,11 @@
 package com.upgrade.pages;
 
-import com.upgrade.pojos.Borrower;
+import com.upgrade.pojos.loan.Borrower;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.util.Arrays;
+import java.lang.reflect.InvocationTargetException;
 
 public class LoginInfoPage extends BasePage {
 
@@ -35,17 +35,16 @@ public class LoginInfoPage extends BasePage {
 
     public LoginInfoPage(WebDriver driver) {
         super(driver);
-        waitForWebElements(Arrays.asList(email));
+        waitForWebElement(email);
     }
 
-    // Note : Use java generics to return a different page
-    public SelectOfferPage enterLoginDetails(Borrower randomPerson) {
+    public <T> T enterLoginDetails(Borrower randomPerson, Class<T> type) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         type(email, randomPerson.getEmail());
         type(password, randomPerson.getPassword());
         selectTermsOfUse();
         click(checkYourRateBtn);
         waitForPage();
-        return new SelectOfferPage(driver);
+        return type.getDeclaredConstructor(WebDriver.class).newInstance(driver);
     }
 
     public LoginInfoPage selectTermsOfUse() {

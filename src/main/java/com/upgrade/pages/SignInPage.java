@@ -1,15 +1,17 @@
 package com.upgrade.pages;
 
-import com.upgrade.pojos.Borrower;
+import com.upgrade.pojos.loan.Borrower;
 import lombok.extern.log4j.Log4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
-import java.util.Arrays;
+import org.testng.Assert;
 
 @Log4j
 public class SignInPage extends BasePage {
+
+    @FindBy(xpath= "//h2[text()='Welcome Back!']")
+    private WebElement welcomeBackTxt;
 
     @FindBy(css="[data-auto='username']")
     private WebElement username;
@@ -36,7 +38,12 @@ public class SignInPage extends BasePage {
         String server = String.format("%s/portal/login", url);
         log.info("Navigate to - " + server);
         driver.get(server);
-        waitForWebElements(Arrays.asList(username));
+        waitForWebElement(username);
         return this;
+    }
+
+    public void verifySignInHeader(){
+        waitForWebElement(welcomeBackTxt);
+        Assert.assertEquals(welcomeBackTxt.getText(), "Welcome Back!", "Welcome Back! is not found");
     }
 }

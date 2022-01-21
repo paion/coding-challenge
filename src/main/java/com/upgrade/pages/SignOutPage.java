@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.util.Arrays;
+import static com.upgrade.utilities.Constants.*;
 
 public class SignOutPage extends BasePage {
 
@@ -13,6 +13,10 @@ public class SignOutPage extends BasePage {
 
     public SignOutPage(WebDriver driver) {
         super(driver);
-        waitForWebElements(Arrays.asList(signOutText));
+        waitForWebElement(signOutText);
+    }
+
+    public void verifySignOutPage(){
+        textToBePresentInElement(signOutText, LOG_OUT_MSG);
     }
 }

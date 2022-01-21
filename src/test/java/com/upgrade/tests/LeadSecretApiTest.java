@@ -8,6 +8,8 @@ import org.testng.annotations.Test;
 
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static com.upgrade.utilities.Constants.*;
 
 @Log4j
 public class LeadSecretApiTest extends AbstractTest {
@@ -20,20 +22,48 @@ public class LeadSecretApiTest extends AbstractTest {
     */
     @Test
     public void leadSecretTest() {
-        LeadSecretRequest leadSecretRequest = LeadSecretRequest.builder()
+        LeadSecretResponse response = getApiResponseForLeadSecret(200);
+
+        assertThat(response.getLoanAppResumptionInfo().getProductType()).isEqualTo(PERSONAL_LOAN);
+        assertThat(response.getLoanAppResumptionInfo().getBorrowerResumptionInfo().getFirstName()).isEqualTo("Benjamin");
+        assertThat(response.getOffers()).isNullOrEmpty();
+        assertThat(response.getSelectedOffer()).isNull();
+        assertThat(response.getRequiredAgreements()).isNullOrEmpty();
+        assertThat(response.getResetOptions()).isNotNull();
+        assertThat(response.getResetOptions()).hasAtLeastOneElementOfType(String.class);
+        assertThat(response.getOriginalLoanApp()).isNull();
+    }
+
+    @Test
+    public void leadSecretWithInvalidLoanAppUuidTest() {
+        loanAppUuid = UUID.randomUUID();
+
+        LeadSecretResponse response = getApiResponseForLeadSecret(404);
+
+        assertThat(response.getCode()).isEqualTo("100001");
+        assertThat(response.getCodeName()).isEqualTo(MISSING_LOAN_APPLICATION);
+        assertThat(response.getMessage()).isEqualTo(MESSAGE);
+        assertThat(response.getRetryable()).isEqualTo("false");
+        assertThat(response.getType()).isEqualTo(ABNORMAL);
+        assertThat(response.getHttpStatus()).isEqualTo(NOT_FOUND);
+    }
+
+    private LeadSecretRequest getLeadSecretRequest() {
+        return LeadSecretRequest.builder()
                 .loanAppUuid(loanAppUuid)
                 .skipSideEffects(true)
                 .build();
+    }
 
-        apiRequest()
-                .addHeader("x-cf-corr-id", UUID.randomUUID().toString())
-                .addHeader("x-cf-source-id", "coding-challenge")
+    private LeadSecretResponse getApiResponseForLeadSecret(int statusCode) {
+        return apiRequest()
+                .addHeader(CORR_ID, UUID.randomUUID().toString())
+                .addHeader(SOURCE_ID, CODING_CHALLENGE)
                 .setContentType(ContentType.JSON)
-                .setRequestUrl(String.format("%s%s", url, "v2/resume/byLeadSecret"))
-                .post(leadSecretRequest, 200)
+                .setRequestUrl(String.format("%s%s", url, LEAD_SECRET_URI))
+                .post(getLeadSecretRequest(), statusCode)
                 .getResponse()
                 .as(LeadSecretResponse.class);
-
     }
 
 }

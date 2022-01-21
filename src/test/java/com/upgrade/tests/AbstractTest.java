@@ -5,6 +5,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeTest;
 
@@ -25,7 +26,7 @@ public class AbstractTest {
     }
 
     public WebDriver getDriver() {
-        if (driver == null) {
+        if (driver == null || ((RemoteWebDriver) driver).getSessionId() == null) {
             WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver();
         }

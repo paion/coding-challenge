@@ -1,4 +1,4 @@
-package com.upgrade.pojos;
+package com.upgrade.pojos.loan;
 
 import lombok.*;
 

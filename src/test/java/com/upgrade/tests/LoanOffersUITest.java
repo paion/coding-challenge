@@ -1,16 +1,15 @@
 package com.upgrade.tests;
 
-import com.github.javafaker.Faker;
-import com.upgrade.pages.LandingPage;
-import com.upgrade.pages.SignInPage;
-import com.upgrade.pojos.Borrower;
+import com.upgrade.pages.*;
+import com.upgrade.pojos.loan.Borrower;
+import com.upgrade.pojos.loan.Offer;
+import com.upgrade.utilities.CommonUtilities;
+import com.upgrade.utilities.CreateTestData;
 import lombok.extern.log4j.Log4j;
 import org.testng.annotations.Test;
+import java.lang.reflect.InvocationTargetException;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
+import static com.upgrade.utilities.Constants.*;
 
 @Log4j
 public class LoanOffersUITest extends AbstractTest {
@@ -22,9 +21,10 @@ public class LoanOffersUITest extends AbstractTest {
     */
 
     @Test
-    public void validateOffersTest() {
-        Borrower borrower = getRandomTestBorrower();
+    public void validateOffersTest() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        Borrower borrower = CreateTestData.getRandomTestBorrower(HOME_IMPROVEMENT);
         LandingPage landingPage = new LandingPage(getDriver());
+        Offer offerAfterAccountCreation = new Offer();
 
         //Capture offer details in the Offers page
         landingPage
@@ -32,16 +32,20 @@ public class LoanOffersUITest extends AbstractTest {
                 .enterLoanDetails(borrower)
                 .enterContactDetails(borrower)
                 .enterIncomeDetails(borrower)
-                .enterLoginDetails(borrower)
-                .clickSignOut();
-
+                .enterLoginDetails(borrower, SelectOfferPage.class)
+                .verifyDefaultFirstOffer(offerAfterAccountCreation)
+                .clickSignOut(SignOutPage.class)
+                .verifySignOutPage();
 
         //Validate the offer details after login
         SignInPage signInPage = new SignInPage(getDriver());
+        Offer offerAfterReLogin = new Offer();
         signInPage
                 .gotoSignInPage(url)
                 .signIn(borrower)
-                .clickSignOut();
+                .verifyDefaultFirstOffer(offerAfterReLogin)
+                .verifyOfferAfterReLogin(offerAfterAccountCreation, offerAfterReLogin)
+                .clickSignOut(SignOutPage.class);
     }
 
     /*
@@ -50,34 +54,24 @@ public class LoanOffersUITest extends AbstractTest {
     */
 
     @Test
-    public void validateDeclineLoanTest() {
-        // Implement Case # 2
-    }
+    public void validateDeclineLoanTest() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        Borrower borrower = CreateTestData.getRandomTestBorrower(DEBT_CONSOLIDATION);
+        borrower.setYearlyIncome(CommonUtilities.generateRandomNumberFromRange(100, 1000));
+        borrower.setAdditionalIncome(CommonUtilities.generateRandomNumberFromRange(100, 500));
 
-    private Borrower getRandomTestBorrower() {
-        Borrower borrower = new Borrower();
-        Faker faker = new Faker(new Locale("en-US"));
+        LandingPage landingPage = new LandingPage(getDriver());
 
-        borrower.setFirstName(faker.name().firstName());
-        borrower.setLastName(faker.name().lastName());
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        borrower.setDob(simpleDateFormat.format(faker.date().birthday()));
-        borrower.setCity(faker.address().city());
-        borrower.setEmail(String.format("coding.%s@upgrade-challenge.com", generateRandomNumberFromRange(15000000, 20000000)));
-        borrower.setPassword("System@987");
-        borrower.setZipCode(faker.address().zipCode());
-        borrower.setStreet(faker.address().streetAddress());
-        borrower.setState("CA");
-        borrower.setLoanPurpose("Home Improvement");
-        borrower.setYearlyIncome(generateRandomNumberFromRange(150000, 200000));
-        borrower.setAdditionalIncome(generateRandomNumberFromRange(1000, 10000));
-        borrower.setDesiredLoanAmount(generateRandomNumberFromRange(5000, 10000));
-        return borrower;
-    }
-
-    private BigDecimal generateRandomNumberFromRange(int min, int max) {
-        return BigDecimal.valueOf(Math.random() * (max - min + 1) + min).setScale(0, RoundingMode.DOWN);
+        //Capture offer details in the Offers page
+        landingPage
+                .gotoLandingPage(url)
+                .enterLoanDetails(borrower)
+                .enterContactDetails(borrower)
+                .enterIncomeDetails(borrower)
+                .enterLoginDetails(borrower, RejectedOfferPage.class)
+                .verifyRejectedOffer()
+                .verifyDocuments()
+                .clickSignOut(SignInPage.class)
+                .verifySignInHeader();
     }
 
 }

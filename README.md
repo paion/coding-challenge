@@ -91,7 +91,7 @@ Verify that your loan application is rejected when annual income specified is lo
     - DOB: <any valid date after 01/01/1930 and before 01/01/2000>
     - Click on the "Continue" button
 4. On the "How much money do you make in a year?" page, enter
-    - Annual Income: Between 100 and 1000 (click on any UI dialogs that may pop-up to confirm amount)
+    - Annual Income: Between 100 and 1000 (click on any UI dialogs that may pop-up to confirm the amount)
     - Additional Income : Between 100 and 500
     - Click on the "Continue" button
 5. On the "Last step before you get your rate" page, enter
@@ -173,7 +173,7 @@ In your automated tests - validate atleast the following, and feel free to inclu
 
 ##### Validations
 
-1. Validate that for correct loanAppUuid provided in the payload below, the API response code is a 200 (OK)
+1. Validate that for correct loanAppUuid provided in the payload above, the API response code is a 200 (OK)
 2. For the above use case, validate the response and make sure productType attribute has value PERSONAL_LOAN.
 3. Validate firstName as Benjamin in borrowerResumptionInfo.
 4. Validate that in the initial POST request, if a different loanAppUuid is provided (that doesn't exist in our system) - the API response is a 404 (NOT_FOUND)
