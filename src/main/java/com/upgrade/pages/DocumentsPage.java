@@ -41,15 +41,15 @@ public class DocumentsPage extends BasePage{
     public FunnelBasePage verifyDocuments(){
         waitForWebElement(upgradePrivateNoticeAgreementTxt);
         assertEqual(upgradePrivateNoticeAgreementTxt, UPGRADE_PRIVACY_NOTICE_AGREEMENT);
-        assertTrue(checkDownLoadDocumentLinkIsDisplayed(upgradePrivateNoticeAgreementTxt));
+        assertTrue(checkDownLoadDocumentLinkIsDisplayed(upgradePrivateNoticeAgreementTxt), ERROR_MSG);
         assertEqual(creditProfileAuthAgreementTxt, CREDIT_PROFILE_AUTH_AGREEMENT);
-        assertTrue(checkDownLoadDocumentLinkIsDisplayed(creditProfileAuthAgreementTxt));
+        assertTrue(checkDownLoadDocumentLinkIsDisplayed(creditProfileAuthAgreementTxt), ERROR_MSG);
         assertEqual(eSignActConsentAgreementTxt, ESIGN_ACT_CONSENT_AGREEMENT);
-        assertTrue(checkDownLoadDocumentLinkIsDisplayed(eSignActConsentAgreementTxt));
+        assertTrue(checkDownLoadDocumentLinkIsDisplayed(eSignActConsentAgreementTxt), ERROR_MSG);
         assertEqual(termsOfUseAgreementTxt, TERMS_OF_USE_AGREEMENT);
-        assertTrue(checkDownLoadDocumentLinkIsDisplayed(termsOfUseAgreementTxt));
+        assertTrue(checkDownLoadDocumentLinkIsDisplayed(termsOfUseAgreementTxt), ERROR_MSG);
         assertEqual(adverseActionTxt, ADVERSE_ACTION_NOTICE);
-        assertTrue(checkDownLoadDocumentLinkIsDisplayed(adverseActionTxt));
+        assertTrue(checkDownLoadDocumentLinkIsDisplayed(adverseActionTxt), ERROR_MSG);
         return new FunnelBasePage(driver);
     }
 

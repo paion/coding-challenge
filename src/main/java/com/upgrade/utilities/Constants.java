@@ -10,6 +10,7 @@ public class Constants {
     public static final String TERMS_OF_USE_AGREEMENT = "Terms Of Use Agreement";
     public static final String ADVERSE_ACTION_NOTICE = "Adverse Action Notice";
     public static final String MSG_SUFFIX = " txt not found";
+    public static final String ERROR_MSG = "DownloadDocument link is not present";
 
     public static final String REJECTED_OFFER_TXT = "We´re sorry, you were not approved.";
     public static final String REJECTED_OFFER_TXT2 = "We´re sorry, we were unable to approve you.0";
