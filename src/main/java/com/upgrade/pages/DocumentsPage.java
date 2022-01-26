@@ -1,16 +1,24 @@
 package com.upgrade.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
+
+import java.util.List;
 
 import static org.testng.Assert.*;
 import static com.upgrade.utilities.Constants.*;
 
 public class DocumentsPage extends BasePage{
+    private static final String DOWNLOAD_DOCUMENT_CSS = "[data-auto='downloadDocument']";
 
     @FindBy(css = "[data-auto='layoutTitle']")
     private WebElement title;
+
+    @FindBy(css = DOWNLOAD_DOCUMENT_CSS)
+    private WebElement downloadDocument;
 
     @FindBy(xpath = XPATH_PREFIX + UPGRADE_PRIVACY_NOTICE_AGREEMENT + XPATH_SUFFIX)
     private WebElement upgradePrivateNoticeAgreementTxt;
@@ -36,15 +44,28 @@ public class DocumentsPage extends BasePage{
     public FunnelBasePage verifyDocuments(){
         waitForWebElement(upgradePrivateNoticeAgreementTxt);
         assertEqual(upgradePrivateNoticeAgreementTxt, UPGRADE_PRIVACY_NOTICE_AGREEMENT);
+        assertTrue(checkDownLoadDocumentIsDisplayed(upgradePrivateNoticeAgreementTxt));
         assertEqual(creditProfileAuthAgreementTxt, CREDIT_PROFILE_AUTH_AGREEMENT);
+        assertTrue(checkDownLoadDocumentIsDisplayed(creditProfileAuthAgreementTxt));
         assertEqual(eSignActConsentAgreementTxt, ESIGN_ACT_CONSENT_AGREEMENT);
+        assertTrue(checkDownLoadDocumentIsDisplayed(eSignActConsentAgreementTxt));
         assertEqual(termsOfUseAgreementTxt, TERMS_OF_USE_AGREEMENT);
+        assertTrue(checkDownLoadDocumentIsDisplayed(termsOfUseAgreementTxt));
         assertEqual(adverseActionTxt, ADVERSE_ACTION_NOTICE);
+        assertTrue(checkDownLoadDocumentIsDisplayed(adverseActionTxt));
         return new FunnelBasePage(driver);
     }
 
     private void assertEqual(WebElement webElement, String expectedTxt){
         assertEquals(webElement.getText(), expectedTxt, expectedTxt.concat(MSG_SUFFIX));
+    }
+
+    private WebElement getParentTagUsingXpath(WebElement webElement){
+        return webElement.findElement(By.xpath("./.."));
+    }
+
+    private boolean checkDownLoadDocumentIsDisplayed(WebElement webElement){
+        return getParentTagUsingXpath(webElement).findElement(By.cssSelector(DOWNLOAD_DOCUMENT_CSS)).isDisplayed();
     }
 
 }

@@ -12,6 +12,7 @@ public class Constants {
     public static final String MSG_SUFFIX = " txt not found";
 
     public static final String REJECTED_OFFER_TXT = "We´re sorry, you were not approved.";
+    public static final String REJECTED_OFFER_TXT2 = "We´re sorry, we were unable to approve you.0";
     public static final String ADVERSE_LEARN_MORE_TXT = "If you would like to learn more about why you were not approved, please click here.";
 
     public static final String LOG_OUT_MSG = "You've been successfully logged out.\nSee you later.";
